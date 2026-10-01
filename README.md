@@ -70,7 +70,3 @@ python -m pip install -e ".[test,docs]"
 | `AnnularCube` | Flujo y varianza tridimensionales, eje espectral, etiquetas de anillos, unidades y metadatos de un brazo espectral. |
 | `Spectrum` | Flujo y varianza unidimensionales de una región, longitudes de onda, máscara opcional y metadatos. |
 
-`Spectrum.error` calcula la raíz cuadrada de la varianza y devuelve NaN
-cuando la varianza es negativa o no finita. No modifica los datos originales.
-La máscara utiliza `True` para canales excluidos. Una máscara ausente no
-equivale a una validación de los datos.
