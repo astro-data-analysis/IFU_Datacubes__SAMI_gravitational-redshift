@@ -1,0 +1,130 @@
+# Rest-wavelength catalogue for the SAMI annular-redshift package.
+# Read with yaml.safe_load; this file contains data, not executable Python.
+#
+# Line identities follow Padilla et al. (2023), Section 3. Precise numerical
+# reference wavelengths below are our explicit implementation choices;
+# the paper does not supply a complete high-precision rest-wavelength table.
+# Preserve the notebook values for Halpha and its neighbouring [N II] lines.
+#
+# All rest wavelengths and doublet components use Angstrom and AIR.
+# The future configuration reader must verify agreement with the spectrum's
+# wavelength convention and convert units explicitly if needed. Never treat
+# these numbers as vacuum wavelengths or shift each annulus independently.
+#
+# enabled means an eligible measurement target, NOT a detected/accepted line.
+# Actual coverage and detection must be established in BOTH annuli.
+# preferred_arm is a routing hint; coverage must use the observed position
+# calculated with the galaxy's initial redshift and the actual wavelength grid.
+#
+# Fit/continuum windows, parameter bounds and quality thresholds belong to
+# the analysis configuration. Do not silently reuse Halpha settings for all
+# lines. The paper does not specify all SPLOT/continuum choices: notebook-
+# based choices must be documented as decisions of this implementation.
+
+schema_version: 1
+catalog_id: sami_annular_air_v1
+wavelength_unit: Angstrom
+wavelength_convention: air
+
+sources:
+  notebook:
+    document: Emission_H_alpha.ipynb
+    description: Exact Halpha and neighbouring NII rest wavelengths used in the notebook.
+  sdss_air_table:
+    url: https://www.sdss3.org/dr10/spectro/spectro_basics.php
+    description: Air column of the common-transition wavelength table.
+  nist_oi:
+    url: https://nvlpubs.nist.gov/nistpubs/Legacy/NSRDS/nbsnsrds3sec7.pdf
+    description: O I atomic wavelength table; air wavelength of the 6300 line.
+  oii_components:
+    url: https://lss.fnal.gov/archive/2013/pub/fermilab-pub-13-353-ae-cd.pdf
+    description: Table 5 explicitly lists air wavelengths of the OII doublet components.
+
+lines:
+  OII_3727:
+    label: '[O II] 3727'
+    preferred_arm: blue
+    enabled: false
+    rest_wavelength: null
+    feature_type: doublet
+    components: [3726.032, 3728.815]
+    wavelength_source: oii_components
+    status: pending_doublet_reference_and_model
+    notes: >-
+      Included in the paper's line list. The label 3727 is not an adopted
+      precise single-transition wavelength. Configure an explicit reference
+      and doublet treatment before enabling measurement. The current disabled
+      state is an implementation limitation, not a selection in the paper.
+
+  Hbeta:
+    label: Hbeta
+    preferred_arm: blue
+    enabled: true
+    rest_wavelength: 4861.363
+    feature_type: individual_line
+    wavelength_source: sdss_air_table
+
+  OIII_4959:
+    label: '[O III] 4959'
+    preferred_arm: blue
+    enabled: true
+    rest_wavelength: 4958.911
+    feature_type: individual_line
+    wavelength_source: sdss_air_table
+
+  OIII_5007:
+    label: '[O III] 5007'
+    preferred_arm: blue
+    enabled: true
+    rest_wavelength: 5006.843
+    feature_type: individual_line
+    wavelength_source: sdss_air_table
+
+  OI_6300:
+    label: '[O I] 6300'
+    preferred_arm: red
+    enabled: true
+    rest_wavelength: 6300.304
+    feature_type: individual_line
+    wavelength_source: nist_oi
+
+  NII_6548:
+    label: '[N II] 6548'
+    preferred_arm: red
+    enabled: true
+    rest_wavelength: 6548.05
+    feature_type: individual_line
+    wavelength_source: notebook
+
+  Halpha:
+    label: Halpha
+    preferred_arm: red
+    enabled: true
+    rest_wavelength: 6562.8
+    feature_type: individual_line
+    wavelength_source: notebook
+    notes: Preserve the notebook value exactly for reproducibility.
+
+  NII_6583:
+    label: '[N II] 6583'
+    preferred_arm: red
+    enabled: true
+    rest_wavelength: 6583.45
+    feature_type: individual_line
+    wavelength_source: notebook
+
+  SII_6717:
+    label: '[S II] 6717'
+    preferred_arm: red
+    enabled: true
+    rest_wavelength: 6716.44
+    feature_type: individual_line
+    wavelength_source: sdss_air_table
+
+  SII_6731:
+    label: '[S II] 6731'
+    preferred_arm: red
+    enabled: true
+    rest_wavelength: 6730.82
+    feature_type: individual_line
+    wavelength_source: sdss_air_table

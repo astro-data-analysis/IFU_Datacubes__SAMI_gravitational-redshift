@@ -1,0 +1,42 @@
+# Reproducible analysis settings for SAMI annular products.
+# Wavelength windows and initial fit parameters are determined automatically.
+schema_version: 1
+config_id: sami_annular_auto_v1
+central_region: 1
+outer_region: 4
+
+# Approximate Gaussian instrumental sigma values quoted in Section 3 of
+# Padilla et al. (2023). These are not object-specific LSF calibrations.
+# Replace with calibrated values when available; no instrumental deconvolution
+# of measured widths is performed. Values are sigma, NOT FWHM.
+instrumental_sigma_kms:
+  blue: 70.0
+  red: 30.0
+instrumental_resolution_source: Padilla et al. (2023), Section 3; approximate arm values
+
+# null selects enabled catalogue lines routed by preferred_arm.
+# An explicit list may be used, for example [Halpha].
+line_ids: null
+
+extraction:
+  rtol: 1.0e-5
+  atol: 1.0e-8
+
+preparation:
+  search_half_width_kms: 600.0
+  initial_width_factor: 3.0
+  max_iterations: 8
+  convergence_fraction: 0.05
+  min_continuum_channels_per_side: 5
+  min_fit_channels: 7
+
+fitting:
+  max_evaluations: 10000
+
+continuum_sensitivity:
+  enabled: true
+  factors: [0.85, 1.0, 1.15]
+
+# Independent formal errors between regions; fixed initial redshift for delta_v.
+# Continuum sensitivity remains separate, not added in quadrature.
+covariance_z: 0.0

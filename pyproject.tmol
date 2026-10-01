@@ -1,0 +1,36 @@
+#This file defines the package name, its dependencies, and the location of the code. 
+# Documentation and testing dependencies remain as additional options.
+
+
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "annular-redshift"
+version = "0.1.0"
+description = "Emission-line redshift measurements from annular spectra."
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "astropy",
+    "pandas",
+    "PyYAML",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
